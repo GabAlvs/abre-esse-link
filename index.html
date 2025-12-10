@@ -2,100 +2,47 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Contagem regressiva pro abraço da Julia</title>
 
-  <!-- Fonte bonitinha do Google Fonts (opcional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonte bonita do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top, #ffe5f0 0%, #ffd0f5 30%, #f4c7ff 60%, #f3a7c2 100%);
+      --card-bg: rgba(255, 255, 255, 0.18);
+      --card-border: rgba(255, 255, 255, 0.45);
+      --accent: #ff4b81;
+      --text-main: #3a1045;
+      --shadow-soft: 0 18px 40px rgba(68, 7, 60, 0.25);
+      --blur: 18px;
+    }
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #ffffff;
-      background: radial-gradient(circle at top, #ffdde1 0%, #ee9ca7 30%, #4b134f 100%);
+      background: var(--bg-gradient);
+      color: var(--text-main);
       overflow: hidden;
-    }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 2.5rem 1.8rem 3rem;
-      width: min(92vw, 680px);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .container::before {
-      /* glow suave atrás do card */
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 60%);
-      opacity: 0.6;
-      z-index: -1;
-    }
-
-    h1 {
-      font-family: "Dancing Script", cursive;
-      font-size: clamp(1.9rem, 4.3vw, 2.9rem);
-      margin-bottom: 1.2rem;
-    }
-
-    .subtitle {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-    }
-
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .time-box {
-      min-width: 80px;
-      padding: 1rem 0.9rem;
-      border-radius: 18px;
-      background: rgba(0, 0, 0, 0.25);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(12px);
-    }
-
-    .time-box span {
-      display: block;
-      font-size: clamp(2rem, 4.8vw, 2.8rem);
-      font-weight: 600;
-      line-height: 1;
-    }
-
-    .time-box small {
-      display: block;
-      margin-top: 0.2rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      opacity: 0.9;
-    }
-
-    #message {
-      margin-top: 1.8rem;
-      font-weight: 500;
-      font-size: 1rem;
+      /* Respeita área segura do iPhone (notch / barra) */
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding-left: max(16px, env(safe-area-inset-left));
     }
 
     /* Corações de fundo */
@@ -110,13 +57,13 @@
     .heart {
       position: absolute;
       bottom: -10vh;
-      width: 18px;
-      height: 18px;
-      background: #fff;
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle at 30% 30%, #fff 0%, #ff9ebd 40%, #ff4b81 100%);
+      transform: rotate(-45deg);
       opacity: 0.8;
-      transform: rotate(45deg);
-      animation: floatUp 12s linear infinite;
-      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+      animation: floatUp 18s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(255, 75, 129, 0.55));
     }
 
     .heart::before,
@@ -125,7 +72,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: #fff;
+      background: inherit;
       border-radius: 50%;
     }
 
@@ -134,131 +81,273 @@
     }
 
     .heart::after {
-      left: -50%;
+      left: 50%;
     }
+
+    /* Variar posição, velocidade e tamanho dos corações */
+    .heart:nth-child(1)  { left: 5%;  animation-duration: 20s; animation-delay: 0s;   width: 18px; height: 18px; }
+    .heart:nth-child(2)  { left: 15%; animation-duration: 24s; animation-delay: 3s;   width: 26px; height: 26px; }
+    .heart:nth-child(3)  { left: 25%; animation-duration: 19s; animation-delay: 1s;   }
+    .heart:nth-child(4)  { left: 35%; animation-duration: 23s; animation-delay: 4s;   width: 20px; height: 20px; }
+    .heart:nth-child(5)  { left: 45%; animation-duration: 21s; animation-delay: 2s;   }
+    .heart:nth-child(6)  { left: 55%; animation-duration: 25s; animation-delay: 6s;   width: 28px; height: 28px; }
+    .heart:nth-child(7)  { left: 65%; animation-duration: 22s; animation-delay: 1.5s; width: 18px; height: 18px; }
+    .heart:nth-child(8)  { left: 75%; animation-duration: 26s; animation-delay: 5s;   }
+    .heart:nth-child(9)  { left: 85%; animation-duration: 19s; animation-delay: 2.5s; width: 24px; height: 24px; }
+    .heart:nth-child(10) { left: 50%; animation-duration: 28s; animation-delay: 7s;   width: 30px; height: 30px; }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(0) scale(0.6) rotate(45deg);
+        transform: translateY(0) rotate(-45deg);
         opacity: 0;
       }
       10% {
         opacity: 0.9;
       }
       100% {
-        transform: translateY(-120vh) scale(1.1) rotate(45deg);
+        transform: translateY(-120vh) rotate(-45deg);
         opacity: 0;
       }
     }
 
-    /* Corações com posições, tamanhos e tempos variados */
-    .heart:nth-child(1)  { left: 5%;  animation-duration: 16s; animation-delay: 0s;  transform: scale(0.7) rotate(45deg); }
-    .heart:nth-child(2)  { left: 15%; animation-duration: 20s; animation-delay: 3s;  transform: scale(0.9) rotate(45deg); }
-    .heart:nth-child(3)  { left: 25%; animation-duration: 18s; animation-delay: 1s;  transform: scale(0.8) rotate(45deg); }
-    .heart:nth-child(4)  { left: 35%; animation-duration: 22s; animation-delay: 4s;  transform: scale(1.1) rotate(45deg); }
-    .heart:nth-child(5)  { left: 45%; animation-duration: 17s; animation-delay: 2s;  transform: scale(0.85) rotate(45deg); }
-    .heart:nth-child(6)  { left: 55%; animation-duration: 21s; animation-delay: 6s;  transform: scale(1) rotate(45deg); }
-    .heart:nth-child(7)  { left: 65%; animation-duration: 15s; animation-delay: 1.5s;transform: scale(0.75) rotate(45deg); }
-    .heart:nth-child(8)  { left: 75%; animation-duration: 19s; animation-delay: 3.5s;transform: scale(1.05) rotate(45deg); }
-    .heart:nth-child(9)  { left: 85%; animation-duration: 23s; animation-delay: 5s;  transform: scale(0.9) rotate(45deg); }
-    .heart:nth-child(10) { left: 50%; animation-duration: 26s; animation-delay: 7s;  transform: scale(1.3) rotate(45deg); }
+    /* Card principal */
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 430px; /* encaixa bem em iPhone 13–15, inclusive Pro Max */
+      padding: 2.2rem 2rem 1.9rem;
+      border-radius: 1.6rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(var(--blur));
+      text-align: center;
+    }
 
-    @media (max-width: 480px) {
+    h1 {
+      font-size: clamp(1.6rem, 4.6vw, 2.1rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      opacity: 0.85;
+      margin-bottom: 1.8rem;
+    }
+
+    .subtitle span {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.85rem;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .time-box {
+      padding: 0.85rem 0.4rem;
+      border-radius: 1.2rem;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      min-width: 70px;
+    }
+
+    .time {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 0.25rem;
+      opacity: 0.8;
+    }
+
+    .footer-text {
+      margin-top: 1.6rem;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 0.4rem;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.9;
+    }
+
+    .footer-text .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* Ajustes finos para telas tipo iPhone 13–15 (390–430px de largura) */
+    @media (max-width: 430px) {
       .container {
-        padding: 2rem 1.4rem 2.4rem;
+        padding: 2rem 1.4rem 1.7rem;
+        border-radius: 1.4rem;
+      }
+
+      .countdown {
+        /* Em telas mais estreitas, 2 colunas pra não ficar apertado */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 0.9rem;
       }
 
       .time-box {
-        min-width: 70px;
-        padding: 0.8rem 0.7rem;
+        min-width: 80px;
+      }
+
+      .time {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Telas bem pequenas (tipo zoom maior ou iPhone em modo “Display Zoom”) */
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      .time {
+        font-size: 1.6rem;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Corações de fundo -->
+  <!-- Fundo com corações -->
   <div class="hearts">
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
-    <span class="heart"></span>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
   </div>
 
-  <div class="container">
-    <h1>contagem regressiva pro abraço da Julia.</h1>
+  <!-- Card principal -->
+  <main class="container">
+    <h1>contagem regressiva pro abraço da Julia</h1>
 
+    <section class="countdown" aria-label="Contagem regressiva até o abraço da Julia">
+      <div class="time-box">
+        <span class="time" id="days">00</span>
+        <span class="label">dias</span>
+      </div>
+      <div class="time-box">
+        <span class="time" id="hours">00</span>
+        <span class="label">horas</span>
+      </div>
+      <div class="time-box">
+        <span class="time" id="minutes">00</span>
+        <span class="label">minutos</span>
+      </div>
+      <div class="time-box">
+        <span class="time" id="seconds">00</span>
+        <span class="label">segundos</span>
+      </div>
+    </section>
 
-    <div class="countdown">
-      <div class="time-box">
-        <span id="days">00</span>
-        <small>Dias</small>
-      </div>
-      <div class="time-box">
-        <span id="hours">00</span>
-        <small>Horas</small>
-      </div>
-      <div class="time-box">
-        <span id="minutes">00</span>
-        <small>Minutos</small>
-      </div>
-      <div class="time-box">
-        <span id="seconds">00</span>
-        <small>Segundos</small>
-      </div>
+    <div class="footer-text" id="status-text">
+      <span class="dot"></span>
+      <span class="highlight">Em contagem regressiva…</span>
     </div>
-
-    <p id="message"></p>
-  </div>
+  </main>
 
   <script>
-    // ===== CONFIGURAÇÃO DA DATA-ALVO =====
-    // Ajuste o ano se quiser algo específico.
-    // Aqui: 12 de dezembro deste ano, às 12h.
-    const now = new Date();
-    const year = now.getFullYear();
-    const targetDate = new Date(year, 11, 12, 12, 0, 0); // mês 11 = dezembro
+    // Define o alvo: 12/12 às 12:00 no ano atual (se já passou, joga pro próximo ano)
+    (function () {
+      const now = new Date();
+      const currentYear = now.getFullYear();
 
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const messageEl = document.getElementById("message");
-    const countdownEl = document.querySelector(".countdown");
-
-    function updateCountdown() {
-      const currentTime = new Date().getTime();
-      const distance = targetDate.getTime() - currentTime;
-
-      if (distance <= 0) {
-        // Contagem finalizada
-        clearInterval(intervalId);
-        countdownEl.style.display = "none";
-        messageEl.textContent = "Chegou a hora do abraço da Julia! ❤️🤗";
-        return;
+      let targetDate = new Date(currentYear, 11, 12, 12, 0, 0); // mês 11 = dezembro
+      if (now > targetDate) {
+        targetDate = new Date(currentYear + 1, 11, 12, 12, 0, 0);
       }
 
-      const totalSeconds = Math.floor(distance / 1000);
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+      const statusText = document.getElementById("status-text");
 
-      const days = Math.floor(totalSeconds / (60 * 60 * 24));
-      const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-      const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-      const seconds = totalSeconds % 60;
+      function pad(num) {
+        return String(num).padStart(2, "0");
+      }
 
-      daysEl.textContent = String(days).padStart(2, "0");
-      hoursEl.textContent = String(hours).padStart(2, "0");
-      minutesEl.textContent = String(minutes).padStart(2, "0");
-      secondsEl.textContent = String(seconds).padStart(2, "0");
-    }
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate.getTime() - now;
 
-    const intervalId = setInterval(updateCountdown, 1000);
-    updateCountdown();
+        if (distance <= 0) {
+          daysEl.textContent = "00";
+          hoursEl.textContent = "00";
+          minutesEl.textContent = "00";
+          secondsEl.textContent = "00";
+
+          statusText.innerHTML = `
+            <span class="dot"></span>
+            <span class="highlight">Chegou a hora do abraço! 🤍</span>
+          `;
+          clearInterval(intervalId);
+          return;
+        }
+
+        const totalSeconds = Math.floor(distance / 1000);
+        const days = Math.floor(totalSeconds / (60 * 60 * 24));
+        const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+        const seconds = totalSeconds % 60;
+
+        daysEl.textContent = pad(days);
+        hoursEl.textContent = pad(hours);
+        minutesEl.textContent = pad(minutes);
+        secondsEl.textContent = pad(seconds);
+      }
+
+      const intervalId = setInterval(updateCountdown, 1000);
+      updateCountdown();
+    })();
   </script>
 </body>
 </html>
+
