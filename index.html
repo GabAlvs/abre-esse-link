@@ -299,9 +299,9 @@
       const now = new Date();
       const currentYear = now.getFullYear();
 
-      let targetDate = new Date(currentYear, 11, 12, 12, 0, 0); // mês 11 = dezembro
+      let targetDate = new Date(currentYear, 11, 12, 15, 0, 0); // mês 11 = dezembro
       if (now > targetDate) {
-        targetDate = new Date(currentYear + 1, 11, 12, 12, 0, 0);
+        targetDate = new Date(currentYear + 1, 11, 12, 15, 0, 0);
       }
 
       const daysEl = document.getElementById("days");
@@ -350,4 +350,5 @@
   </script>
 </body>
 </html>
+
 
